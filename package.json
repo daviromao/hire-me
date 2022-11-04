@@ -1,0 +1,13 @@
+{
+  "name": "hire-me",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "server": "yarn workspace @hire-me/server"
+  },
+  "devDependencies": {
+    "lerna": "^6.0.1"
+  }
+}
