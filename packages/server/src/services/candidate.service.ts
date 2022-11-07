@@ -22,6 +22,16 @@ class CandidateService {
     return findCandidate;
   }
 
+  public async findByEmail(candidateEmail: string): Promise<Candidate> {
+    const findCandidate: Candidate | null = await this.candidates.findUnique({
+      where: { email: candidateEmail },
+    });
+
+    if (!findCandidate) throw new HttpException(409, "Candidate not found");
+
+    return findCandidate;
+  }
+
   public async create(candidateData: CreateCandidateDto): Promise<Candidate> {
     const findCandidate: Candidate | null = await this.candidates.findUnique({
       where: { email: candidateData.email },

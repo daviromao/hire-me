@@ -22,6 +22,16 @@ class CompanyService {
     return findCompany;
   }
 
+  public async findByEmail(companyEmail: string): Promise<Company> {
+    const findCompany: Company | null = await this.companies.findUnique({
+      where: { email: companyEmail },
+    });
+
+    if (!findCompany) throw new HttpException(409, "Company not found");
+
+    return findCompany;
+  }
+
   public async create(companyData: CreateCompanyDto): Promise<Company> {
     const findCompany: Company | null = await this.companies.findUnique({
       where: { email: companyData.email },
