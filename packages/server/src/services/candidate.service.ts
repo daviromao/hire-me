@@ -1,9 +1,10 @@
 import { hash } from "bcrypt";
 import { PrismaClient, Candidate } from "@prisma/client";
+import { UserService } from "../interfaces/user-services.interface";
 import CreateCandidateDto from "../dtos/candidates.dto";
 import HttpException from "../exceptions/HttpException";
 
-class CandidateService {
+class CandidateService implements UserService {
   public candidates = new PrismaClient().candidate;
 
   public async findAll(): Promise<Candidate[]> {
