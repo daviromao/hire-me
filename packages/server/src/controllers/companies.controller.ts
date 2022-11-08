@@ -1,4 +1,6 @@
+import { Company } from "@prisma/client";
 import { Request, Response, NextFunction } from "express";
+import HttpException from "../exceptions/HttpException";
 import CompanyService from "../services/company.service";
 
 class CompanyController {
@@ -33,10 +35,14 @@ class CompanyController {
     }
   };
 
-  public update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public update = async (user: Company, req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const companyId = req.params.id;
       const companyData = req.body;
+      const company = await this.companyService.findById(companyId);
+
+      if (user.id !== company.id) throw new HttpException(401, "Unauthorized");
+
       const updateCompanyData = await this.companyService.update(companyId, companyData);
       res.status(200).json({ data: updateCompanyData, message: "updated" });
     } catch (error) {
@@ -44,11 +50,15 @@ class CompanyController {
     }
   };
 
-  public delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public delete = async (user: Company, req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const companyId = req.params.id;
-      const deleteCompanyData = await this.companyService.delete(companyId);
-      res.status(200).json({ data: deleteCompanyData, message: "deleted" });
+      const company = await this.companyService.findById(companyId);
+
+      if (user.id !== company.id) throw new HttpException(401, "Unauthorized");
+
+      await this.companyService.delete(companyId);
+      res.sendStatus(204);
     } catch (error) {
       next(error);
     }

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import CompanyController from "../controllers/companies.controller";
 import { Routes } from "../interfaces/routes.interface";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 class CompanyRoute implements Routes {
   public path = "/companies";
@@ -17,8 +18,8 @@ class CompanyRoute implements Routes {
     this.router.get(`${this.path}`, this.companyController.index);
     this.router.get(`${this.path}/:id`, this.companyController.show);
     this.router.post(`${this.path}`, this.companyController.store);
-    this.router.put(`${this.path}/:id`, this.companyController.update);
-    this.router.delete(`${this.path}/:id`, this.companyController.delete);
+    this.router.put(`${this.path}/:id`, authMiddleware, this.companyController.update);
+    this.router.delete(`${this.path}/:id`, authMiddleware, this.companyController.delete);
   }
 }
 

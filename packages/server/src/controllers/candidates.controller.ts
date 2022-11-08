@@ -1,6 +1,7 @@
 import { Candidate } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import CreateCandidateDto from "../dtos/candidates.dto";
+import HttpException from "../exceptions/HttpException";
 import CandidateService from "../services/candidate.service";
 
 class CandidateController {
@@ -35,10 +36,14 @@ class CandidateController {
     }
   };
 
-  public update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public update = async (user: Candidate, req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const candidateId = req.params.id;
       const candidateData: CreateCandidateDto = req.body;
+      const candidate = await this.candidateService.findById(candidateId);
+
+      if (user.id !== candidate.id) throw new HttpException(401, "Unauthorized");
+
       const updateCandidateData: Candidate = await this.candidateService.update(candidateId, candidateData);
       res.status(200).json({ data: updateCandidateData, message: "updated" });
     } catch (error) {
@@ -46,9 +51,13 @@ class CandidateController {
     }
   };
 
-  public delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public delete = async (user: Candidate, req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const candidateId = req.params.id;
+      const candidate = await this.candidateService.findById(candidateId);
+
+      if (user.id !== candidate.id) throw new HttpException(401, "Unauthorized");
+
       await this.candidateService.delete(candidateId);
       res.sendStatus(204);
     } catch (error) {
