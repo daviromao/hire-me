@@ -8,7 +8,7 @@ if (!API_PORT || !SECRET_PASSPHRASE) {
   throw new Error("Missing environment variables");
 }
 
-const config: Record<string, string> = {
+const config = {
   API_PORT,
   SECRET_PASSPHRASE,
 };

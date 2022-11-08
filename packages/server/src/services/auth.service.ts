@@ -23,12 +23,12 @@ class AuthService {
 
     if (!isPasswordMatching) throw new HttpException(400, "Invalid credential");
 
-    const token = this.createToken(findUser);
+    const token = this.createToken(findUser, type);
     return { user: findUser as T, token };
   }
 
-  private createToken(user: User): string {
-    const dataStoredInToken = { id: user.id, type: user.type };
+  private createToken(user: User, type: AuthConfig.UserTypes): string {
+    const dataStoredInToken = { id: user.id, type };
     const secret: string = config.SECRET_PASSPHRASE;
     const token = sign(dataStoredInToken, secret, {
       expiresIn: this.tokenLife,

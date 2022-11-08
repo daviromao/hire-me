@@ -23,6 +23,7 @@
   "rules": {
     "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
     "max-len": ["error", { "code": 120 }],
+    "import/prefer-default-export": "off",
     "class-methods-use-this": "off"
   }
 }
