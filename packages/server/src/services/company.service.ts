@@ -51,10 +51,7 @@ class CompanyService implements UserService {
     return createCompanyData;
   }
 
-  public async update(
-    companyId: string,
-    companyData: CreateCompanyDto,
-  ): Promise<Company> {
+  public async update(companyId: string, companyData: CreateCompanyDto): Promise<Company> {
     const findCompany: Company | null = await this.companies.findUnique({
       where: { id: companyId },
     });

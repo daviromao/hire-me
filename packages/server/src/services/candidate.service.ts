@@ -51,10 +51,7 @@ class CandidateService implements UserService {
     return createCandidateData;
   }
 
-  public async update(
-    candidateId: string,
-    candidateData: CreateCandidateDto,
-  ): Promise<Candidate> {
+  public async update(candidateId: string, candidateData: CreateCandidateDto): Promise<Candidate> {
     const findCandidate: Candidate | null = await this.candidates.findUnique({
       where: { id: candidateId },
     });

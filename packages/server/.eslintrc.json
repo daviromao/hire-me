@@ -21,6 +21,8 @@
     "prettier"
   ],
   "rules": {
-    "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }]
+    "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+    "max-len": ["error", { "code": 120 }],
+    "class-methods-use-this": "off"
   }
 }
