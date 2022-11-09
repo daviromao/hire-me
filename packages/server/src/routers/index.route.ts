@@ -7,12 +7,14 @@ class IndexRouter implements Routes {
 
   public router = Router();
 
+  public indexControler = new IndexController();
+
   constructor() {
     this.initializeRoutes();
   }
 
   private initializeRoutes() {
-    this.router.get(this.path, IndexController.index);
+    this.router.get(this.path, this.indexControler.index);
   }
 }
 
