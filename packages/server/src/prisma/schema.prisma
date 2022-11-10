@@ -9,23 +9,82 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model Candidate {
-  id       String   @id @default(cuid())
-  email    String   @unique
-  password String
-  name     String
-  type     UserType @default(CANDIDATE)
+  id           String        @id @default(cuid())
+  email        String        @unique
+  password     String
+  name         String
+  type         UserType      @default(CANDIDATE)
+
+  candidacies  Candidacy[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Company {
-  id       String   @id @default(cuid())
-  email    String   @unique
-  password String
-  name     String
-  type     UserType @default(COMPANY)
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String
+  name      String
+  type      UserType  @default(COMPANY)
+
+  vacancies Vacancy[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Vacancy {
+  id              String          @id @default(cuid())
+  title           String
+  description     String
+  salary          Decimal?
+  workRegime      WorkRegime
+  workLoad        WorkLoad
+  workType        WorkType
+  experienceLevel ExperienceLevel
+  companyId       String
+  company         Company         @relation(fields: [companyId], references: [id])
+
+  candidacies    Candidacy[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+//this model creates a candidacy to a vacancy
+model Candidacy {
+  id          String    @id @default(cuid())
+  candidate   Candidate @relation(fields: [candidateId], references: [id])
+  candidateId String
+  vacancy     Vacancy   @relation(fields: [vacancyId], references: [id])
+  vacancyId   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 enum UserType {
   CANDIDATE
   COMPANY
+}
+
+enum WorkRegime {
+  CLT
+  PJ
+}
+
+enum WorkLoad {
+  FULLTIME
+  PARTTIME
+}
+
+enum WorkType {
+  REMOTE
+  HYBRID
+  IN_PERSION
+}
+
+enum ExperienceLevel {
+  JUNIOR
+  MID_LEVEL
+  SENIOR
 }
