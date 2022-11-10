@@ -10,7 +10,7 @@ class VacancyController {
   public index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const vacancies: Vacancy[] = await this.vacancyService.findAll();
-      res.status(200).json({ vacancies });
+      res.status(200).json({ data: vacancies });
     } catch (error) {
       next(error);
     }
@@ -20,7 +20,7 @@ class VacancyController {
     try {
       const vacancyId: string = req.params.id;
       const vacancy: Vacancy = await this.vacancyService.findById(vacancyId);
-      res.status(200).json({ vacancy });
+      res.status(200).json({ data: vacancy });
     } catch (error) {
       next(error);
     }

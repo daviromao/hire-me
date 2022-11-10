@@ -9,7 +9,7 @@ class CandidacyController {
   public index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const candidacies: Candidacy[] = await this.candidacyService.findAll();
-      res.status(200).json({ candidacies });
+      res.status(200).json({ data: candidacies });
     } catch (error) {
       next(error);
     }
@@ -22,7 +22,7 @@ class CandidacyController {
         candidate: true,
         vacancy: true,
       });
-      res.status(200).json({ candidacy });
+      res.status(200).json({ data: candidacy });
     } catch (error) {
       next(error);
     }
