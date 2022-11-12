@@ -1,4 +1,4 @@
-import { Candidacy, Candidate } from "@prisma/client";
+import { Candidate } from "@prisma/client";
 import type { Request, Response, NextFunction } from "express";
 import HttpException from "../exceptions/HttpException";
 import CandidacyService from "../services/candidacy.service";
@@ -8,7 +8,7 @@ class CandidacyController {
 
   public index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const candidacies: Candidacy[] = await this.candidacyService.findAll();
+      const candidacies = await this.candidacyService.findAll();
       res.status(200).json({ data: candidacies });
     } catch (error) {
       next(error);
@@ -17,8 +17,8 @@ class CandidacyController {
 
   public show = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const candidacyId: string = req.params.id;
-      const candidacy: Candidacy = await this.candidacyService.findById(candidacyId, {
+      const candidacyId = req.params.id;
+      const candidacy = await this.candidacyService.findById(candidacyId, {
         candidate: true,
         vacancy: true,
       });
@@ -40,8 +40,8 @@ class CandidacyController {
 
   public delete = async (user: Candidate, req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const candidacyId: string = req.params.id;
-      const candidacy: Candidacy = await this.candidacyService.findById(candidacyId);
+      const candidacyId = req.params.id;
+      const candidacy = await this.candidacyService.findById(candidacyId);
 
       if (user.id !== candidacy.candidateId) throw new HttpException(401, "Unauthorized");
 

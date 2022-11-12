@@ -1,7 +1,9 @@
 import { Company } from "@prisma/client";
 import { Request, Response, NextFunction } from "express";
+import CreateCompanyDto from "../dtos/companies.dto";
 import HttpException from "../exceptions/HttpException";
 import CompanyService from "../services/company.service";
+import { validate } from "../utils/validator";
 
 class CompanyController {
   public companyService = new CompanyService();
@@ -27,7 +29,7 @@ class CompanyController {
 
   public store = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const companyData = req.body;
+      const companyData = await validate(CreateCompanyDto, req.body);
       const createCompanyData = await this.companyService.create(companyData);
       res.status(201).json({ data: createCompanyData, message: "created" });
     } catch (error) {
@@ -38,7 +40,7 @@ class CompanyController {
   public update = async (user: Company, req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const companyId = req.params.id;
-      const companyData = req.body;
+      const companyData = await validate(CreateCompanyDto, req.body, { skipMissingProperties: true });
       const company = await this.companyService.findById(companyId);
 
       if (user.id !== company.id) throw new HttpException(401, "Unauthorized");
