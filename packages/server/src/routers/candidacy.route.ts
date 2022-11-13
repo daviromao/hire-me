@@ -16,8 +16,7 @@ class CandidacyRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(this.path, this.candidacyController.index);
-    this.router.get(`${this.path}/:id`, this.candidacyController.show);
+    this.router.get(`${this.path}/:id`, authMiddleware, this.candidacyController.findOne);
 
     this.router.post(
       `/vacancies/:vacancyId${this.path}`,

@@ -1,10 +1,7 @@
-import { PrismaClient, Candidacy } from "@prisma/client";
+import { PrismaClient, Candidacy, Prisma } from "@prisma/client";
 import HttpException from "../exceptions/HttpException";
 
-type CandidacyIncludes = {
-  vacancy?: boolean;
-  candidate?: boolean;
-};
+type CandidacyIncludes = Prisma.CandidacyInclude;
 
 class CandidacyService {
   public candidacies = new PrismaClient().candidacy;
@@ -17,7 +14,7 @@ class CandidacyService {
     return allCandidacies;
   }
 
-  public async findById(candidacyID: string, includes?: CandidacyIncludes): Promise<Candidacy> {
+  public async findById(candidacyID: string, includes?: CandidacyIncludes) {
     const candidacy = await this.candidacies.findUnique({
       where: { id: candidacyID },
       include: includes,
@@ -25,7 +22,7 @@ class CandidacyService {
 
     if (!candidacy) throw new HttpException(404, "Candidacy doesn't exist");
 
-    return candidacy;
+    return candidacy as Candidacy;
   }
 
   public async findByVacancy(vacancyID: string, includes?: CandidacyIncludes): Promise<Candidacy[]> {

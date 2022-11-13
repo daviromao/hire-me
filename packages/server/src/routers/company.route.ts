@@ -15,9 +15,9 @@ class CompanyRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.companyController.index);
-    this.router.get(`${this.path}/:id`, this.companyController.show);
-    this.router.post(`${this.path}`, this.companyController.store);
+    this.router.get(`${this.path}`, this.companyController.findAll);
+    this.router.get(`${this.path}/:id`, this.companyController.findOne);
+    this.router.post(`${this.path}`, this.companyController.create);
     this.router.put(`${this.path}/:id`, authMiddleware, this.companyController.update);
     this.router.delete(`${this.path}/:id`, authMiddleware, this.companyController.delete);
   }

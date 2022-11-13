@@ -8,7 +8,7 @@ import { validate } from "../utils/validator";
 class CandidateController {
   public candidateService = new CandidateService();
 
-  public index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public findAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const candidates = await this.candidateService.findAll();
       res.status(200).json({ candidates });
@@ -17,7 +17,7 @@ class CandidateController {
     }
   };
 
-  public show = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public findOne = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const candidateId = req.params.id;
       const candidate = await this.candidateService.findById(candidateId);
@@ -27,7 +27,7 @@ class CandidateController {
     }
   };
 
-  public store = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const candidateData: CreateCandidateDto = req.body;
       const createCandidateData = await this.candidateService.create(candidateData);

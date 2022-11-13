@@ -8,7 +8,7 @@ import { validate } from "../utils/validator";
 class CompanyController {
   public companyService = new CompanyService();
 
-  public index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public findAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const companies = await this.companyService.findAll();
       res.status(200).json({ companies });
@@ -17,7 +17,7 @@ class CompanyController {
     }
   };
 
-  public show = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public findOne = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const companyId = req.params.id;
       const company = await this.companyService.findById(companyId);
@@ -27,7 +27,7 @@ class CompanyController {
     }
   };
 
-  public store = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const companyData = await validate(CreateCompanyDto, req.body);
       const createCompanyData = await this.companyService.create(companyData);
