@@ -1,27 +1,24 @@
 import { Candidate } from "@prisma/client";
 import type { Request, Response, NextFunction } from "express";
+import { User } from "../configs/user.config";
 import HttpException from "../exceptions/HttpException";
 import CandidacyService from "../services/candidacy.service";
 
 class CandidacyController {
   public candidacyService = new CandidacyService();
 
-  public index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const candidacies = await this.candidacyService.findAll();
-      res.status(200).json({ data: candidacies });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public show = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public findOne = async (user: User, req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const candidacyId = req.params.id;
       const candidacy = await this.candidacyService.findById(candidacyId, {
         candidate: true,
         vacancy: true,
       });
+
+      if (user.id !== candidacy.candidateId && user.id !== (candidacy as any).vacancy.companyId) {
+        throw new HttpException(401, "Unauthorized");
+      }
+
       res.status(200).json({ data: candidacy });
     } catch (error) {
       next(error);

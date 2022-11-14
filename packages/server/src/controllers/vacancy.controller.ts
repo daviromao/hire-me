@@ -8,7 +8,7 @@ import { validate } from "../utils/validator";
 class VacancyController {
   public vacancyService = new VacancyService();
 
-  public index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public findAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const vacancies = await this.vacancyService.findAll();
       res.status(200).json({ data: vacancies });
@@ -17,7 +17,41 @@ class VacancyController {
     }
   };
 
-  public show = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public findAllByCompany = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const companyId = req.params.id;
+      const vacancies = await this.vacancyService.findByCompany(companyId);
+      res.status(200).json({ data: vacancies });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public findOneWithCandidates = async (
+    user: Company,
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const vacancyId = req.params.id;
+      const vacancy = await this.vacancyService.findById(vacancyId, {
+        candidacies: {
+          include: {
+            candidate: true,
+          },
+        },
+      });
+
+      if (user.id !== vacancy.companyId) throw new HttpException(401, "Unauthorized");
+
+      res.status(200).json({ data: vacancy });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public findOne = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const vacancyId = req.params.id;
       const vacancy = await this.vacancyService.findById(vacancyId);
@@ -27,7 +61,7 @@ class VacancyController {
     }
   };
 
-  public store = async (user: Company, req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public create = async (user: Company, req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const vacancyData = await validate(CreateVacancyDto, req.body);
       const createVacancyData = await this.vacancyService.create(vacancyData, user);

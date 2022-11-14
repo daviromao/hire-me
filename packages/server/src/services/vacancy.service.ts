@@ -1,11 +1,8 @@
-import { Company, PrismaClient, Vacancy } from "@prisma/client";
+import { Company, Prisma, PrismaClient, Vacancy } from "@prisma/client";
 import CreateVacancyDto from "../dtos/vacancy.dto";
 import HttpException from "../exceptions/HttpException";
 
-type VacancyIncludes = {
-  company?: boolean;
-  candidacies?: boolean;
-};
+type VacancyIncludes = Prisma.VacancyInclude;
 
 class VacancyService {
   public vacancies = new PrismaClient().vacancy;
