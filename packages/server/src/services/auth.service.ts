@@ -27,7 +27,7 @@ class AuthService {
     return { user: findUser as T, token };
   }
 
-  private createToken(user: User, type: AuthConfig.UserTypes): string {
+  public createToken(user: User, type: AuthConfig.UserTypes): string {
     const dataStoredInToken = { id: user.id, type };
     const secret: string = config.SECRET_PASSPHRASE;
     const token = sign(dataStoredInToken, secret, {
