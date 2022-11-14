@@ -16,11 +16,18 @@ class VacancyRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(this.path, this.vacancyController.index);
-    this.router.get(`${this.path}/:id`, this.vacancyController.show);
-    this.router.post(this.path, authMiddleware, roleMiddleware("COMPANY"), this.vacancyController.store);
+    this.router.get(this.path, this.vacancyController.findAll);
+    this.router.get(`${this.path}/:id`, this.vacancyController.findOne);
+    this.router.get(`companies/:companyId${this.path}`, this.vacancyController.findAllByCompany);
+    this.router.post(this.path, authMiddleware, roleMiddleware("COMPANY"), this.vacancyController.create);
     this.router.put(`${this.path}/:id`, authMiddleware, roleMiddleware("COMPANY"), this.vacancyController.update);
     this.router.delete(`${this.path}/:id`, authMiddleware, roleMiddleware("COMPANY"), this.vacancyController.delete);
+    this.router.get(
+      `${this.path}/:id/candidacies`,
+      authMiddleware,
+      roleMiddleware("COMPANY"),
+      this.vacancyController.findOneWithCandidates,
+    );
   }
 }
 

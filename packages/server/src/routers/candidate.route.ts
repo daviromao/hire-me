@@ -15,9 +15,9 @@ class CandidateRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.candidateController.index);
-    this.router.get(`${this.path}/:id`, this.candidateController.show);
-    this.router.post(`${this.path}`, this.candidateController.store);
+    this.router.get(`${this.path}`, this.candidateController.findAll);
+    this.router.get(`${this.path}/:id`, this.candidateController.findOne);
+    this.router.post(`${this.path}`, this.candidateController.create);
     this.router.put(`${this.path}/:id`, authMiddleware, this.candidateController.update);
     this.router.delete(`${this.path}/:id`, authMiddleware, this.candidateController.delete);
   }
