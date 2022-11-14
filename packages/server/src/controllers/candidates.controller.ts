@@ -11,7 +11,7 @@ class CandidateController {
   public findAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const candidates = await this.candidateService.findAll();
-      res.status(200).json({ candidates });
+      res.status(200).json({ data: candidates });
     } catch (error) {
       next(error);
     }
@@ -21,7 +21,7 @@ class CandidateController {
     try {
       const candidateId = req.params.id;
       const candidate = await this.candidateService.findById(candidateId);
-      res.status(200).json({ candidate });
+      res.status(200).json({ data: candidate });
     } catch (error) {
       next(error);
     }
