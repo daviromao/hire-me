@@ -11,7 +11,7 @@ class CompanyController {
   public findAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const companies = await this.companyService.findAll();
-      res.status(200).json({ companies });
+      res.status(200).json({ data: companies });
     } catch (error) {
       next(error);
     }
@@ -21,7 +21,7 @@ class CompanyController {
     try {
       const companyId = req.params.id;
       const company = await this.companyService.findById(companyId);
-      res.status(200).json({ company });
+      res.status(200).json({ data: company });
     } catch (error) {
       next(error);
     }

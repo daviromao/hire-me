@@ -16,7 +16,7 @@ class CandidacyController {
       });
 
       if (user.id !== candidacy.candidateId && user.id !== (candidacy as any).vacancy.companyId) {
-        throw new HttpException(401, "Unauthorized");
+        throw new HttpException(403, "Forbidden");
       }
 
       res.status(200).json({ data: candidacy });
@@ -40,11 +40,11 @@ class CandidacyController {
       const candidacyId = req.params.id;
       const candidacy = await this.candidacyService.findById(candidacyId);
 
-      if (user.id !== candidacy.candidateId) throw new HttpException(401, "Unauthorized");
+      if (user.id !== candidacy.candidateId) throw new HttpException(403, "Forbidden");
 
       await this.candidacyService.delete(candidacyId);
 
-      res.status(200).json({ message: "deleted" });
+      res.sendStatus(204);
     } catch (error) {
       next(error);
     }

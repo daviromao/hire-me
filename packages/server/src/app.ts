@@ -5,7 +5,7 @@ import { Routes } from "./interfaces/routes.interface";
 import errorMiddleware from "./middlewares/error.middleware";
 
 class App {
-  public server: express.Application;
+  private server: express.Application;
 
   public port: string | number;
 
@@ -38,6 +38,10 @@ class App {
 
   private initializeErrorHandling() {
     this.server.use(errorMiddleware);
+  }
+
+  public getServer() {
+    return this.server;
   }
 }
 

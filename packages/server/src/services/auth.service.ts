@@ -9,7 +9,7 @@ import AuthConfig from "../configs/auth.config";
 class AuthService {
   private readonly tokenLife: number = 60 * 60 * 24;
 
-  private userServices = AuthConfig.userServices;
+  public userServices = AuthConfig.userServices;
 
   public async login<T extends User>(
     credentials: CredentialsDto,
@@ -21,13 +21,13 @@ class AuthService {
 
     const isPasswordMatching = await compare(credentials.password, findUser.password);
 
-    if (!isPasswordMatching) throw new HttpException(400, "Invalid credential");
+    if (!isPasswordMatching) throw new HttpException(401, "Invalid credential");
 
     const token = this.createToken(findUser, type);
     return { user: findUser as T, token };
   }
 
-  private createToken(user: User, type: AuthConfig.UserTypes): string {
+  public createToken(user: User, type: AuthConfig.UserTypes): string {
     const dataStoredInToken = { id: user.id, type };
     const secret: string = config.SECRET_PASSPHRASE;
     const token = sign(dataStoredInToken, secret, {

@@ -77,7 +77,7 @@ class VacancyController {
       const vacancyData = await validate(CreateVacancyDto, req.body, { skipMissingProperties: true });
       const vacancy = await this.vacancyService.findById(vacancyId);
 
-      if (user.id !== vacancy.companyId) throw new HttpException(401, "Unauthorized");
+      if (user.id !== vacancy.companyId) throw new HttpException(403, "Forbidden");
 
       const updateVacancyData = await this.vacancyService.update(vacancyId, vacancyData);
 
@@ -95,7 +95,7 @@ class VacancyController {
       if (user.id !== vacancy.companyId) throw new HttpException(401, "Unauthorized");
 
       await this.vacancyService.delete(vacancyId);
-      res.status(200).json({ message: "deleted" });
+      res.sendStatus(204);
     } catch (error) {
       next(error);
     }
