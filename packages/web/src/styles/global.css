@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dropshadow-navbar{
+  box-shadow: 0 4px 16px 0 rgb(0 0 0 / 5%);
+}
