@@ -3,10 +3,11 @@ import React from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Home from '../pages/Home';
 import AppRoutes from './AppRoutes'
+import AuthRoutes from './AuthRoutes';
 
 const MyRoutes: React.FC = () => {
   // const { signed } = useAuth()
-  const signed = true;
+  const signed = false;
 
   return (
     <BrowserRouter>
@@ -15,7 +16,7 @@ const MyRoutes: React.FC = () => {
         <Route path="/home" element={<Home/>} />
       </Routes>
 
-      {signed ? <AppRoutes /> : ''}
+      {signed ? <AppRoutes /> : <AuthRoutes/>}
     </BrowserRouter>
   )
 }

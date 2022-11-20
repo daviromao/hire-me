@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import express from "express";
+import cors from "cors";
 import config from "./configs/config.base";
 import { Routes } from "./interfaces/routes.interface";
 import errorMiddleware from "./middlewares/error.middleware";
@@ -26,6 +27,12 @@ class App {
   }
 
   private middlewares(): void {
+    const corsOptions = {
+      origin: "*",
+      optionsSuccessStatus: 200,
+    };
+
+    this.server.use(cors(corsOptions));
     this.server.use(express.json());
     this.server.use(express.urlencoded({ extended: true }));
   }
