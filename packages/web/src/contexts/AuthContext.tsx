@@ -23,8 +23,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const handleLogin = useCallback(
     (data: { user: IUser; token: string}) => {
-      localStorage.setItem('auth:user', data.token)
-      localStorage.setItem('auth:token', JSON.stringify(data.user))
+      localStorage.setItem('auth:user', JSON.stringify(data.user))
+      localStorage.setItem('auth:token', data.token)
 
       setUser(data.user)
       setToken(data.token)
