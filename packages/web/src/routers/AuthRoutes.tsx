@@ -8,7 +8,7 @@ const AuthRoutes: React.FC = () => {
   return (
     <Routes>
       <Route path='/login/:type' element={<SignIn/>} />
-      <Route path='/sign-up/' element={<SignUp/>} />
+      <Route path='/register/' element={<SignUp/>} />
     </Routes>
   )
 }

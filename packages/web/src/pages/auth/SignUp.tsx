@@ -48,7 +48,7 @@ const SignUp:React.FC = () => {
         <div className='flex items-center justify-between'>
           <span className='font-medium'>Eu sou um(a): </span>
           <ToggleButtonGroup
-            color="secondary"
+            color="primary"
             value={userType}
             exclusive
             onChange={(event, value) => {if(value !== null) setUserType(value)}}
@@ -90,7 +90,7 @@ const SignUp:React.FC = () => {
               render={({ field }) => <TextField {...field} type="password" error={!!errors.passwordConfirmation} label="Confirmar"variant="outlined" helperText={errors.password?.message}/>}
             />
           </div>
-          <Button color="secondary" onClick={handleSubmit(onSubmit)} type="submit" variant="contained">Submit</Button>
+          <Button color="primary" onClick={handleSubmit(onSubmit)} type="submit" variant="contained">Submit</Button>
         </form>
       </div>
 

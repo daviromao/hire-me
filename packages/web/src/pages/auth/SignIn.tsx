@@ -16,6 +16,7 @@ interface IFormInput {
 const SignIn: React.FC = () => {
   const { control, handleSubmit } = useForm<IFormInput>()
   const navigate = useNavigate()
+  const [error, setError] = useState('')
   const { type } = useParams()
   const { login } = useAuth()
 
@@ -28,8 +29,7 @@ const SignIn: React.FC = () => {
     } catch (error: any) {
       console.log(error);
       if(error.response) {
-
-        alert('Não foi possível realizar login, verifique suas credenciais!');
+        setError('Não foi possível fazer login. Verifique seu email e senha.');
       }
     }
   }
@@ -44,7 +44,10 @@ const SignIn: React.FC = () => {
   return (
     <MainLayout>
       
-      <span className="text-lg my-5">Acesse sua conta no <strong>Hire Me</strong></span>
+      <span className="text-lg mt-5">Acesse sua conta no <strong>Hire Me</strong></span>
+      <span className="text-lg mb-5">
+        {type === 'candidate' ? 'e candidate-se para vagas!' : 'e encontre os melhores candidatos!'}
+      </span>
 
       <div className='max-w-md min-w-fit w-3/6 py-3 gap-3'>
         <div>
@@ -73,7 +76,8 @@ const SignIn: React.FC = () => {
                   size='small'
                 />)}
             />
-            <Button variant='contained' onClick={handleSubmit(onSubmit)} color='secondary'>Entrar</Button>
+            {error && <span className='text-red-500'>{error}</span>}
+            <Button variant='contained' onClick={handleSubmit(onSubmit)} color='primary'>Entrar</Button>
           </form>
         </div>
       </div>
