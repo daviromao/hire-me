@@ -10,7 +10,9 @@ class VacancyController {
 
   public findAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const vacancies = await this.vacancyService.findAll();
+      const vacancies = await this.vacancyService.findAll({
+        company: true,
+      });
       res.status(200).json({ data: vacancies });
     } catch (error) {
       next(error);
