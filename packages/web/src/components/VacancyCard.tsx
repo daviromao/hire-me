@@ -1,8 +1,10 @@
 import { Card, CardContent } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { capitalize } from '../helpers/str'
 
 interface VacancyCardProps {
+  id: string
   title: string
   description: string
   salary: number
@@ -14,6 +16,7 @@ interface VacancyCardProps {
 }
 
 const VacancyCard: React.FC<VacancyCardProps> = ({
+  id,
   title,
   description,
   salary,
@@ -30,7 +33,9 @@ const VacancyCard: React.FC<VacancyCardProps> = ({
         <div className='flex flex-col gap-3 justify-between'>
           <div className='flex flex-col gap-1'>
             <div>
-              <span className='text-lg font-bold'>{title}</span>
+              <Link to={`/vacancies/${id}`}>
+                <span className='text-lg font-bold'>{title}</span>
+              </Link>
               <span className='text-xs bg-violet-400 ml-2 rounded p-1 text-white'>{capitalize(experienceLevel)}</span>
             </div>
             <span className='text-sm font-medium'>Empresa {company}</span>

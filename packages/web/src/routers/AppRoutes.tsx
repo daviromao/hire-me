@@ -1,14 +1,21 @@
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 import Profile from '../pages/Profile'
-import Vacancy from '../pages/VacancyDetail'
+import VacancyCreate from '../pages/VacancyCreate'
+import VacancyDetail from '../pages/VacancyDetail'
 
 
 const AppRoutes: React.FC = () => {
+  const { user } = useAuth()
+
   return (
     <Routes>
       <Route path='/profile/' element={<Profile/>} />
-      <Route path='/vacancies/:id' element={<Vacancy/>} />
+
+      {user?.type === 'COMPANY' && (
+        <Route path='/vacancy/create' element={<VacancyCreate/>} />
+      )}
     </Routes>
   )
 }

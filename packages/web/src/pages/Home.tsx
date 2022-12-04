@@ -73,10 +73,11 @@ const Home: React.FC = () => {
             </div>
           </div>
         <div className='w-1/2 min-w-[500px] max-w-3xl'>
-          {
+          { vacancies.length > 0 ?
             vacancies.map(vacancy => (
               <VacancyCard
                 key={vacancy.id}
+                id={vacancy.id}
                 title={vacancy.title}
                 description={vacancy.description}
                 salary={Number(vacancy.salary)}
@@ -87,6 +88,7 @@ const Home: React.FC = () => {
                 experienceLevel={vacancy.experienceLevel}
               />
             ))
+            : <span className='text-lg font-bold'>Nenhuma vaga encontrada</span>
           }
         </div>
       </div>

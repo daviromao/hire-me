@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 import logo from '../assets/logo.png'
 
 const Navbar: React.FC = () => {
-  const { signed, logout } = useAuth()
+  const { signed, logout, user } = useAuth()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate()
   const open = Boolean(anchorEl)
@@ -28,6 +28,13 @@ const Navbar: React.FC = () => {
               <Link to='/profile'>Perfil</Link>
             </div>
          )}
+         {
+            user?.type === 'COMPANY' && (
+              <div className='flex items-center gap-4'>
+                <Link to='/vacancy/create'>Criar vaga</Link>
+              </div>
+            )
+         }
         </div>
       </div>
       <div className='flex'>
