@@ -5,15 +5,10 @@
     "packages/*"
   ],
   "scripts": {
-    "server": "yarn workspace @hire-me/server",
-    "web": "yarn workspace @hire-me/web"
+    "server": "yarn workspace @hire-me/server"
   },
   "devDependencies": {
     "lerna": "^6.0.1"
   },
-  "packageManager": "yarn@3.3.0",
-  "dependencies": {
-    "react-router-dom": "^6.4.3",
-    "web": "^0.0.2"
-  }
+  "packageManager": "yarn@3.3.0"
 }
