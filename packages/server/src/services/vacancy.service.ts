@@ -10,9 +10,6 @@ class VacancyService {
   public async findAll(includes?: VacancyIncludes): Promise<Vacancy[]> {
     const allVacancies: Vacancy[] = await this.vacancies.findMany({
       include: includes,
-      orderBy: {
-        createdAt: "desc",
-      },
     });
 
     return allVacancies;
